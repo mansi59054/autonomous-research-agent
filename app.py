@@ -94,7 +94,7 @@ if run_btn:
         steps_log.markdown("\n".join(all_steps_html), unsafe_allow_html=True)
         
         # Update progress (rough estimate)
-        n = len([s for s in all_steps_html if "tool_call" in html])
+n = len([s for s in all_steps_html if "tool_call" in s])
         progress_bar.progress(min(0.9, len(all_steps_html) / (max_iter * 3)), 
                               text=f"Running… {len(all_steps_html)} steps so far")
 
