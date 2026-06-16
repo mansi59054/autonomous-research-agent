@@ -10,7 +10,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Research Agent",
     page_icon="🔬",
@@ -21,7 +20,6 @@ st.set_page_config(
 st.title("🔬 Autonomous Research Agent")
 st.caption("Powered by Claude — searches arXiv & Semantic Scholar, then writes a literature review.")
 
-# ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.header("⚙️ Configuration")
     api_key = st.text_input(
@@ -36,7 +34,6 @@ with st.sidebar:
         index=0,
     )
     max_iter = st.slider("Max tool-call rounds", min_value=5, max_value=20, value=12)
-
     st.divider()
     st.markdown("**Example topics:**")
     examples = [
@@ -50,7 +47,6 @@ with st.sidebar:
         if st.button(ex, use_container_width=True):
             st.session_state["topic_input"] = ex
 
-# ── Main area ─────────────────────────────────────────────────────────────────
 topic = st.text_input(
     "Research topic",
     value=st.session_state.get("topic_input", ""),
@@ -63,12 +59,10 @@ run_btn = st.button("🚀 Run Agent", type="primary", disabled=not api_key or no
 if run_btn:
     from agent import run_agent
 
-    # ── Live progress area ────────────────────────────────────────────────────
     progress_bar = st.progress(0, text="Starting agent...")
     status_area = st.empty()
     steps_container = st.expander("🔍 Agent steps (live)", expanded=True)
     steps_log = steps_container.empty()
-    
     all_steps_html = []
     start_time = time.time()
 
@@ -79,24 +73,22 @@ if run_btn:
             "tool_result": "📋",
         }
         icon = icon_map.get(step["type"], "•")
-        
         if step["type"] == "thinking":
             snippet = step["text"][:120].replace("<", "&lt;").replace(">", "&gt;")
-            html = f'<p>{icon} <b>Thinking</b> (iter {step["iteration"]}): <em>{snippet}…</em></p>'
+            html = f'<p>{icon} <b>Thinking</b> (iter {step["iteration"]}): <em>{snippet}...</em></p>'
         elif step["type"] == "tool_call":
             inp = str(step["input"])[:80]
             html = f'<p>{icon} <b>Tool call</b>: <code>{step["tool"]}</code> — {inp}</p>'
         else:
             summary = step["result_summary"].replace("<", "&lt;").replace(">", "&gt;")
             html = f'<p>{icon} <b>Result</b>: {summary}</p>'
-
         all_steps_html.append(html)
         steps_log.markdown("\n".join(all_steps_html), unsafe_allow_html=True)
-        
-        # Update progress (rough estimate)
-n = len([s for s in all_steps_html if "tool_call" in s])
-        progress_bar.progress(min(0.9, len(all_steps_html) / (max_iter * 3)), 
-                              text=f"Running… {len(all_steps_html)} steps so far")
+        n = len([s for s in all_steps_html if "tool_call" in s])
+        progress_bar.progress(
+            min(0.9, len(all_steps_html) / (max_iter * 3)),
+            text=f"Running… {len(all_steps_html)} steps so far"
+        )
 
     with st.spinner("Agent is researching…"):
         result = run_agent(
@@ -113,18 +105,15 @@ n = len([s for s in all_steps_html if "tool_call" in s])
     if result["error"]:
         st.warning(f"⚠️ {result['error']}")
 
-    # ── Stats ─────────────────────────────────────────────────────────────────
     col1, col2, col3 = st.columns(3)
     col1.metric("Tool calls", result["tool_calls"])
     col2.metric("Agent steps", len(result["steps"]))
     col3.metric("Time elapsed", f"{elapsed:.1f}s")
 
-    # ── Final report ──────────────────────────────────────────────────────────
     st.divider()
     st.subheader("📄 Literature Review")
     st.markdown(result["report"])
 
-    # ── Download ──────────────────────────────────────────────────────────────
     st.download_button(
         label="⬇️ Download report (.md)",
         data=result["report"],
