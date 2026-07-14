@@ -140,6 +140,10 @@ An AI agent that autonomously researches any academic topic — searching arXiv 
 ![Final literature review](rass5.png)
 *Structured review with citations, ready to download*
 
+![Evals](RASS5.png)
+*Pass Fail results while actually running the code
+
+
 ## 🛠️ Tech Stack
 
 | Layer | Tool |
