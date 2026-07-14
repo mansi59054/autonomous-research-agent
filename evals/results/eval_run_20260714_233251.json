@@ -1,0 +1,50 @@
+[
+  {
+    "topic": "quantum reservoir computing",
+    "tool_calls": 7,
+    "tool_check_passed": true,
+    "error": null,
+    "rubric_scores": {
+      "reasoning_coherence": "SCORE: 5\nREASON: Each reasoning step followed logically from the previous one: the agent began with broad searches, recognized gaps and API errors, narrowed to targeted queries, systematically fetched details on the most relevant papers found, and then synthesized all gathered information into a coherent literature review without contradictions or unexplained jumps.",
+      "tool_call_appropriateness": "SCORE: 4\nREASON: The agent made highly relevant tool calls\u2014searching for \"quantum reservoir computing\" directly and fetching specific QRC papers\u2014though the second arxiv search for \"quantum reservoir computing machine learning\" returned mostly off-topic results and the agent didn't follow up with more targeted queries to find additional relevant papers.",
+      "output_structure_conformance": "SCORE: 5\nREASON: The report has a clear hierarchical markdown structure with a top-level title, multiple organized sections using ##/### headers (Overview, Key Themes with numbered subsections, Notable Papers, Open Problems & Future Directions), a formatted table, and a dedicated References section with full citations and arXiv links.",
+      "citation_accuracy": "SCORE: 5\nREASON: All citations include specific arXiv IDs that were actually fetched and verified during the research process, with plausible and consistent author names, titles, and years that match real papers in the quantum reservoir computing literature."
+    }
+  },
+  {
+    "topic": "spiking neural networks for edge AI",
+    "tool_calls": 7,
+    "tool_check_passed": true,
+    "error": null,
+    "rubric_scores": {
+      "reasoning_coherence": "SCORE: 5\nREASON: Each reasoning step followed logically from the previous one: the agent began with broad searches, recognized a tool error and continued with alternative searches, progressively narrowed to specific subtopics (hardware, training, benchmarking), fetched details on promising papers discovered in those searches, and then synthesized all gathered information into a coherent structured review without any contradictions or unexplained jumps.",
+      "tool_call_appropriateness": "SCORE: 5\nREASON: Every tool call was directly relevant to the research topic\u2014searches targeted spiking neural networks, edge AI/computing, neuromorphic hardware, and SNN training methods, while paper fetches focused on directly applicable works on SNN hardware, benchmarking, and training.",
+      "output_structure_conformance": "SCORE: 5\nREASON: The report has a clear, well-organized markdown structure with a top-level H1 header, multiple H2 and H3 section headers covering Overview, Key Themes, Notable Papers, Open Problems, and a dedicated References section with 12 properly formatted citations including arXiv IDs and URLs.",
+      "citation_accuracy": "SCORE: 5\nREASON: All citations include specific arXiv IDs with plausible formats, realistic author names, credible titles matching the SNN/edge AI topic, and several were directly verified through tool calls during the research process."
+    }
+  },
+  {
+    "topic": "diffusion models for protein structure prediction",
+    "tool_calls": 9,
+    "tool_check_passed": true,
+    "error": null,
+    "rubric_scores": {
+      "reasoning_coherence": "SCORE: 5\nREASON: Each reasoning step followed logically from the previous one: the agent started with broad searches, recognized they weren't specific enough, refined to more targeted queries, then fetched details on specific papers identified, and finally synthesized all gathered information into a coherent report\u2014with no contradictions or unexplained jumps.",
+      "tool_call_appropriateness": "SCORE: 5\nREASON: Every tool call was directly relevant to the research topic\u2014searches used precise queries about diffusion models, protein structure/design, and specific landmark papers (RFdiffusion, FrameDiff, Chroma), and paper fetches targeted directly relevant arxiv IDs on SE(3) diffusion, flow matching, and protein backbone generation.",
+      "output_structure_conformance": "SCORE: 5\nREASON: The report has excellent markdown structure with a clear title, multiple organized sections (Overview, Key Themes with subsections, Notable Papers, Open Problems, and References), a well-formatted table, and a comprehensive references section with arxiv IDs and URLs.",
+      "citation_accuracy": "SCORE: 4\nREASON: The core citations (FrameDiff 2302.02277, FrameFlow 2310.05297, and the review 2501.02680) were directly fetched and verified via tool calls, while the remaining citations include plausible arXiv IDs and titles that fit the topic, though some like the 2026-dated SaDiT paper and a few others could not be independently confirmed as real papers."
+    }
+  },
+  {
+    "topic": "transformers for time series forecasting",
+    "tool_calls": 8,
+    "tool_check_passed": true,
+    "error": null,
+    "rubric_scores": {
+      "reasoning_coherence": "SCORE: 4\nREASON: The reasoning steps follow a logical progression from broad search to specific paper retrieval, with each step building on previous results, though the transition from failed Semantic Scholar results to fetching a specific arxiv ID (2202.07125) without explicitly finding it in the search results represents a minor unexplained jump.",
+      "tool_call_appropriateness": "SCORE: 5\nREASON: Every tool call was directly relevant to the research topic\u2014searches targeted transformers and time series forecasting specifically, and paper fetches focused on key landmark works (Informer, Autoformer, the survey) central to the field.",
+      "output_structure_conformance": "SCORE: 5\nREASON: The report demonstrates excellent markdown structure with a clear H1 title, multiple H2 section headers (Overview, Key Themes, Notable Papers, Open Problems & Future Directions, References), H3 subsections, a formatted table, and a well-organized references section with arxiv IDs, full citations, and URLs.",
+      "citation_accuracy": "SCORE: 5\nREASON: All citations include specific arxiv IDs that were retrieved via actual tool calls, and the core papers (Informer, Autoformer, Transformers in Time Series survey) are well-known real papers with accurate titles, authors, and years that match the field."
+    }
+  }
+]

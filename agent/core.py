@@ -9,6 +9,7 @@ import anthropic
 
 from tools import TOOL_SCHEMAS, run_tool
 from agent.prompts import SYSTEM_PROMPT, build_user_prompt
+from agent.checkpoints import checkpoint_after_tool_call, checkpoint_before_final_answer
 
 
 def run_agent(
@@ -78,6 +79,12 @@ def run_agent(
         # ── If no more tool calls → final answer ─────────────────────────────
         if stop_reason == "end_turn" or not tool_use_blocks:
             report = "\n".join(text_blocks)
+
+            # ── Checkpoint: sanity-check the report before returning it ───────
+            ok, reason = checkpoint_before_final_answer(report, tool_call_count)
+            if not ok:
+                print(f"[CHECKPOINT FAILED] {reason}")
+
             break
 
         # ── Process tool calls ────────────────────────────────────────────────
@@ -103,6 +110,11 @@ def run_agent(
 
             # ── Execute the tool ──────────────────────────────────────────────
             result = run_tool(tool_name, tool_input)
+
+            # ── Checkpoint: verify tool result before using it ────────────────
+            ok, reason = checkpoint_after_tool_call(result)
+            if not ok:
+                print(f"[CHECKPOINT FAILED] {reason}")
 
             result_step = {
                 "type": "tool_result",
