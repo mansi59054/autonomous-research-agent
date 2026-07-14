@@ -150,6 +150,29 @@ An AI agent that autonomously researches any academic topic — searching arXiv 
 | CLI | Python `argparse` |
 | Report export | Markdown |
 
+## ✅ Evaluation
+
+Beyond just running, the agent is tested for reliability in two ways:
+
+- **Runtime pass/fail checkpoints** (`agent/checkpoints.py`): catch empty tool
+  results, tool errors, and thin or unsupported reports before they propagate
+  into the final output. These run live, during every agent execution.
+- **Offline rubric evaluation** (`evals/`): a fixed set of research topics is
+  run through the agent and scored with an LLM-as-judge against four criteria
+  — reasoning coherence, tool-call appropriateness, output structure, and
+  citation accuracy.
+
+Requires `ANTHROPIC_API_KEY` set in your `.env` file (see Setup above).
+
+Run the eval suite:
+```bash
+python3 -m evals.run_evals
+```
+
+Results are saved as timestamped JSON files in `evals/results/`.
+
+## Roadmap / Ideas
+
 ## Roadmap / Ideas
 
 - [ ] Support additional literature sources (Google Scholar, PubMed)
